@@ -78,99 +78,13 @@
                             <th>單據操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- 案例 1: 報價階段 -->
-                        <tr>
-                            <td>PJ-20260331-001</td>
-                            <td>吹毛球痴 (忠孝店)</td>
-                            <td>
-                                <span class="status-badge stage-1"><span class="status-dot"></span>報價中等回覆</span>
-                            </td>
-                            <td>
-                                <div class="progress-steps">
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot"></div>
-                                    <div class="step-dot"></div>
-                                    <div class="step-dot"></div>
-                                </div>
-                            </td>
-                            <td>2026-03-31</td>
-                            <td>$5,400</td>
-                            <td>
-                                <a href="quotation.html" class="action-link">報價單</a>
-                                <span style="margin: 0 5px; color: #eee;">|</span>
-                                <a href="work-dispatch.html" class="action-link">派工單</a>
-                            </td>
-                        </tr>
-                        <!-- 案例 2: 派工階段 -->
-                        <tr>
-                            <td>PJ-20260328-095</td>
-                            <td>萌寵寵物店 (大安)</td>
-                            <td>
-                                <span class="status-badge stage-2"><span class="status-dot"></span>派工中</span>
-                            </td>
-                            <td>
-                                <div class="progress-steps">
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot"></div>
-                                    <div class="step-dot"></div>
-                                </div>
-                            </td>
-                            <td>2026-03-28</td>
-                            <td>$8,200</td>
-                            <td>
-                                <a href="work-dispatch.html" class="action-link">派工單</a>
-                            </td>
-                        </tr>
-                        <!-- 案例 3: 施作階段 -->
-                        <tr>
-                            <td>PJ-20260325-088</td>
-                            <td>王小明 (美容教室)</td>
-                            <td>
-                                <span class="status-badge stage-3"><span class="status-dot"></span>施作中</span>
-                            </td>
-                            <td>
-                                <div class="progress-steps">
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot"></div>
-                                </div>
-                            </td>
-                            <td>2026-03-25</td>
-                            <td>$12,800</td>
-                            <td>
-                                <a href="work-order.html" class="action-link">施工單</a>
-                                <span style="margin: 0 5px; color: #eee;">|</span>
-                                <a href="completion.html" class="action-link">結案單</a>
-                            </td>
-                        </tr>
-                        <!-- 案例 4: 結案階段 -->
-                        <tr>
-                            <td>PJ-20260320-015</td>
-                            <td>王大衛 (居家消毒)</td>
-                            <td>
-                                <span class="status-badge stage-4"><span class="status-dot"></span>已結案</span>
-                            </td>
-                            <td>
-                                <div class="progress-steps">
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                    <div class="step-dot active"></div>
-                                </div>
-                            </td>
-                            <td>2026-03-20</td>
-                            <td>$3,200</td>
-                            <td>
-                                <a href="completion.html" class="action-link">結案單</a>
-                            </td>
-                        </tr>
+                    <tbody id="project-list-body">
+                        <!-- 資料將由 js/index.js 動態渲染 -->
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
+    <script src="js/index.js"></script>
 </body>
 </html>
