@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 服務專案 - 快速報價</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .service-section { display: none; }
+        .service-section.is-active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- 模擬 Vue Pure Admin Layout -->
+    <aside class="sidebar">
+        <div class="logo">WANG CHOICE</div>
+        <div class="menu-item active">服務專案管理</div>
+        <div class="menu-item">派工調度</div>
+        <div class="menu-item">現場施工紀錄</div>
+        <div class="menu-item">客戶維護</div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 服務專案管理 / 新增專案</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">建立服務專案 - 報價流程</h3>
+                <!-- 頂部資訊區塊 (Desktop 雙欄 / Mobile 堆疊) -->
+                <div class="info-grid">
+                    <!-- 1. 客戶與案場基礎資訊 (順序 1) -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header">客戶與案場基礎資訊</div>
+                        <div class="el-row" style="grid-template-columns: 1fr 1fr;">
+                            <div class="input-group">
+                                <label>客戶名稱</label>
+                                <input type="text" id="clientName" placeholder="請輸入客戶名稱">
+                            </div>
+                            <div class="input-group">
+                                <label>聯絡人</label>
+                                <input type="text" id="contactPerson" placeholder="請輸入聯絡人姓名">
+                            </div>
+                            <div class="input-group">
+                                <label>聯絡電話</label>
+                                <input type="text" id="contactPhone" placeholder="請輸入聯絡電話">
+                            </div>
+                            <div class="input-group">
+                                <label>服務地址</label>
+                                <input type="text" id="clientAddress" placeholder="請輸入施作地址">
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>施作順序 (Priority)</label>
+                                <input type="text" id="executionPriority" placeholder="例如：美容室 > 會客區">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 業務資訊 (順序 2) -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header">業務資訊</div>
+                        <div class="el-row" style="grid-template-columns: 1fr;">
+                            <div class="input-group">
+                                <label>VIP 服務專員</label>
+                                <input type="text" id="salesName" value="管理員 (Admin)" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>VIP 服務專線</label>
+                                <input type="text" id="salesPhone" value="0800-000-000">
+                            </div>
+                            <div class="input-group">
+                                <label>報價有效日期</label>
+                                <input type="date" id="expiryDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 分區頁籤 -->
+                <div class="card">
+                    <div class="el-tabs" style="margin-bottom: 0;">
+                        <div class="el-tabs__header">
+                            <div class="el-tabs__item is-active" onclick="switchMainTab(this, 'grooming')">美容區</div>
+                            <div class="el-tabs__item" onclick="switchMainTab(this, 'lobby')">會客區</div>
+                        </div>
+                    </div>
+                    
+                    <div id="grooming-section" class="service-section is-active">
+                        <div id="grooming-container"></div>
+                    </div>
+
+                    <div id="lobby-section" class="service-section">
+                        <div id="lobby-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部結算欄 (RWD) -->
+        <footer class="footer-nav">
+            <div class="total-summary">
+                <div class="summary-item">
+                    <label>單人總工時 (min)</label>
+                    <input type="number" id="inputTotalTime" class="footer-input" value="0">
+                </div>
+                <div class="summary-item">
+                    <label>雙人施工 (hr)</label>
+                    <input type="number" id="inputTotalHours" class="footer-input" step="0.1" value="0">
+                </div>
+                <div class="summary-item">
+                    <label>報價合計 ($)</label>
+                    <input type="text" id="inputTotalPrice" class="footer-input total-price-input" value="0">
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" onclick="location.href='index.html'">取消並返回</button>
+                <button class="btn btn-primary" onclick="generateInvoice()">產製並推播報價單</button>
+            </div>
+        </footer>
+    </main>
+
+    <!-- 範本：區域配置區塊 -->
+    <template id="section-template">
+        <div class="card section-card" style="box-shadow: none; border-color: #ebeef5; background: #fafafa;">
+            <div class="card-header" style="background: #fff; font-size: 14px;">
+                <span>區域子配置</span>
+                <button class="btn" style="padding: 2px 8px; border:none; color: #f56c6c; background: transparent;" onclick="this.closest('.section-card').remove(); calculateAll();">移除此區</button>
+            </div>
+            <div class="item-list">
+                <!-- 動態插入服務項目 -->
+            </div>
+        </div>
+    </template>
+
+    <!-- 範本：細項 -->
+    <template id="item-template">
+        <div class="item-card" onclick="itemRowClick(this, event)">
+            <div class="item-row-header">
+                <div class="item-info">
+                    <input type="checkbox" class="item-check" onclick="event.stopPropagation(); toggleOptions(this)">
+                    <span class="item-name">項目名稱</span>
+                </div>
+                <span class="item-price">-</span>
+            </div>
+            
+            <div class="item-options" style="display: none; padding-left: 28px; padding-bottom: 8px;">
+                <div class="el-row" onclick="event.stopPropagation()">
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>條件屬性</label>
+                        <select class="condition-select" onchange="calculateAll()"></select>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>數量</label>
+                        <input type="number" value="1" min="1" class="item-count" onchange="calculateAll()" style="padding: 10px 8px; width: 100%;">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>單位</label>
+                        <div class="item-unit-text" style="padding: 10px 0; font-size: 14px; color: var(--text-regular);"></div>
+                    </div>
+                    <div class="image-section">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            現場圖面
+                            <input type="file" class="real-file-input" style="display: none;" accept="image/*" multiple onchange="handleFileSelect(this)">
+                            <button class="btn" style="padding: 0; width: 22px; height: 22px; line-height: 20px; font-size: 18px; border-style: dashed; color: var(--primary-color); border-color: var(--primary-color);" onclick="this.previousElementSibling.click()">+</button>
+                        </label>
+                        <div class="image-upload-area" style="margin-top: 5px; min-height: 40px; display: flex; flex-wrap: wrap; gap: 10px;">
+                            <!-- 預覽圖將在此生成 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="js/quotation.js"></script>
+</body>
+</html>

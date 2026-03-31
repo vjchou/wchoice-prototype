@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 派工服務單</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .service-section { display: none; }
+        .service-section.is-active { display: block; }
+        .item-card.no-hover { cursor: default; }
+        .item-card.no-hover:hover { background: #fff; }
+    </style>
+</head>
+
+<body>
+    <aside class="sidebar">
+        <div class="logo">WANG CHOICE</div>
+        <div class="menu-item active">服務專案管理</div>
+        <div class="menu-item">派工調度</div>
+        <div class="menu-item">現場施工紀錄</div>
+        <div class="menu-item">客戶維護</div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 服務專案管理 / 建立派工</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">建立派工服務單 (PJ-20260331-001)</h3>
+
+                <div class="info-grid">
+                    <!-- 1. 案場概況 (引自報價單) -->
+                    <div class="card">
+                        <div class="card-header">案場概況 (由報價單帶入)</div>
+                        <div class="el-row">
+                            <div class="input-group">
+                                <label>客戶名稱</label>
+                                <input type="text" value="吹毛球痴 (忠孝店)" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>聯絡人 / 電話</label>
+                                <input type="text" value="林小姐 / 0912-345-678" readonly>
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>施作地址</label>
+                                <input type="text" value="台北市大安區忠孝東路四段 100 號" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>計畫施作日</label>
+                                <input type="date" id="dispatchDate" onclick="this.showPicker()">
+                            </div>
+                            <div class="input-group">
+                                <label>車程 (來回 mins)</label>
+                                <input type="number" value="60" style="text-align: center;">
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>重點施作備註</label>
+                                <textarea rows="2" placeholder="由報價單帶入或手動補充重點項目..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. 工具與人員確認 -->
+                    <div class="card">
+                        <div class="card-header"
+                            style="display: flex; justify-content: space-between; align-items: center;">
+                            <span>人員與工具確認</span>
+                            <button class="btn" style="padding: 2px 10px; font-size: 12px; border-style: dashed;"
+                                onclick="addStaffRow()">+ 新增人員</button>
+                        </div>
+
+                        <div id="staff-container" style="margin-bottom: 20px;">
+                            <!-- 預設帶入核心團隊 -->
+                            <div class="staff-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <input type="text" placeholder="人員姓名" style="flex: 1;" value="黃峻洵 環境技術課長">
+                                <input type="text" placeholder="備註/工具" style="flex: 2;">
+                                <button class="btn" style="color: #f56c6c; padding: 5px 10px;"
+                                    onclick="this.parentElement.remove()">×</button>
+                            </div>
+                            <div class="staff-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <input type="text" placeholder="人員姓名" style="flex: 1;" value="馨琳 環境技術專員">
+                                <input type="text" placeholder="備註/工具" style="flex: 2;">
+                                <button class="btn" style="color: #f56c6c; padding: 5px 10px;"
+                                    onclick="this.parentElement.remove()">×</button>
+                            </div>
+                        </div>
+
+                        <div class="input-group" style="margin-bottom: 0;">
+                            <label>客戶產品 (預設配置)</label>
+                            <input type="text" value="72Hr 5L x1" placeholder="請輸入產品配置">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 專業施工 -->
+                <div class="card">
+                    <div class="card-header">專業施工 (預計工時：3.5 hr)</div>
+                    <table class="dispatch-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">施作時間軸</th>
+                                <th>預計時間(mins)</th>
+                                <th>實際完成時間</th>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width: 120px;"><input type="text" class="table-input" value="出發-抵達" style="font-weight: bold;"></td>
+                                <td><input type="text" class="table-input" value="10:00~10:30"></td>
+                                <td><input type="number" class="table-input" value="30" style="text-align: center;"></td>
+                                <td><input type="time" class="table-input"></td>
+                                <td><input type="text" class="table-input" value="超時請立即回報" style="color: #f56c6c;"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="table-input" value="美容室" style="font-weight: bold;"></td>
+                                <td><input type="text" class="table-input" value="10:40~13:00"></td>
+                                <td><input type="number" class="table-input" value="141" style="text-align: center;"></td>
+                                <td><input type="time" class="table-input"></td>
+                                <td><input type="text" class="table-input" placeholder="備註"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="table-input" value="吃飯時間" style="font-weight: bold;"></td>
+                                <td><input type="text" class="table-input" value="13:00~14:00"></td>
+                                <td><input type="number" class="table-input" value="60" style="text-align: center;"></td>
+                                <td><input type="time" class="table-input"></td>
+                                <td><input type="text" class="table-input" value="-"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="table-input" value="會客室" style="font-weight: bold;"></td>
+                                <td><input type="text" class="table-input" value="14:10~15:00"></td>
+                                <td><input type="number" class="table-input" value="50" style="text-align: center;"></td>
+                                <td><input type="time" class="table-input"></td>
+                                <td><input type="text" class="table-input" placeholder="備註"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="table-input" value="結案時間" style="font-weight: bold;"></td>
+                                <td><input type="text" class="table-input" value="15:00~15:15"></td>
+                                <td><input type="number" class="table-input" value="15" style="text-align: center;"></td>
+                                <td><input type="time" class="table-input"></td>
+                                <td><input type="text" class="table-input" value="-"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 15px; display: flex; gap: 20px; align-items: center; background: #fafafa; padding: 15px; border-radius: 4px;">
+                        <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                            <label>預估使用量</label>
+                            <input type="text" class="table-input" value="2500ML">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                            <label>實際使用量</label>
+                            <input type="text" class="table-input" placeholder="現場施作後填寫">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. 服務項目清單 (引自報價單，移除金額) -->
+                <div class="card">
+                    <div class="card-header">待施作項目細項 (由報價單帶入)</div>
+                    <div class="el-tabs" style="margin-bottom: 0;">
+                        <div class="el-tabs__header">
+                            <div class="el-tabs__item is-active" onclick="switchMainTab(this, 'grooming')">美容區</div>
+                            <div class="el-tabs__item" onclick="switchMainTab(this, 'lobby')">會客區</div>
+                        </div>
+                    </div>
+                    
+                    <div id="grooming-section" class="service-section is-active">
+                        <div id="grooming-container"></div>
+                    </div>
+
+                    <div id="lobby-section" class="service-section">
+                        <div id="lobby-container"></div>
+                    </div>
+                </div>
+
+                <!-- 項目範本 (不含金額) -->
+                <template id="item-template">
+                    <div class="item-card no-hover">
+                        <div class="item-row-header">
+                            <div class="item-info">
+                                <input type="checkbox" class="item-check" checked>
+                                <span class="item-name">項目名稱</span>
+                            </div>
+                        </div>
+                        
+                        <div class="item-options" style="padding-left: 28px; padding-bottom: 8px;">
+                            <div class="el-row">
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <label>規格條件</label>
+                                    <select class="condition-select" disabled></select>
+                                </div>
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <label>數量</label>
+                                    <input type="number" class="item-count" value="1" readonly style="background: #fdfdfd;">
+                                </div>
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <label>單位</label>
+                                    <div class="item-unit-text" style="padding: 10px 0; font-size: 14px;"></div>
+                                </div>
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <label>預覽圖</label>
+                                    <div class="image-upload-area" style="margin-top: 0;">
+                                        <!-- 唯讀圖面 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <footer class="footer-nav">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" onclick="location.href='index.html'">取消並返回</button>
+                <button class="btn btn-primary"
+                    onclick="alert('派工已確認並發送 LINE 通知'); location.href='index.html'">確認派工並推播通知</button>
+            </div>
+        </footer>
+    </main>
+    <script src="js/work-dispatch.js"></script>
+</body>
+
+</html>

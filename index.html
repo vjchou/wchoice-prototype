@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 服務專案看板</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .filter-row {
+            display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-end;
+            background: #fff; padding: 20px; border-radius: 4px; border: 1px solid var(--border-color);
+        }
+        .data-table {
+            width: 100%; border-collapse: collapse; background: #fff;
+            border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color);
+        }
+        .data-table th, .data-table td {
+            padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; font-size: 14px;
+        }
+        .data-table th { background: #fafafa; color: var(--text-regular); font-weight: 500; }
+        .data-table tr:hover { background: #fdfaf5; }
+        .action-link { color: var(--primary-color); text-decoration: none; font-size: 13px; font-weight: 500; }
+        .action-link.disabled { color: #c0c4cc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">WANG CHOICE</div>
+        <div class="menu-item active">服務專案管理</div>
+        <div class="menu-item">派工調度</div>
+        <div class="menu-item">現場施工紀錄</div>
+        <div class="menu-item">客戶維護</div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 服務專案管理 / 專案看板</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <!-- 查詢條件 -->
+                <div class="filter-row">
+                    <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                        <label>客戶名稱 / 服務案場</label>
+                        <input type="text" placeholder="關鍵字快速搜尋服務專案...">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0; width: 150px;">
+                        <label>當前階段</label>
+                        <select>
+                            <option>全部階段</option>
+                            <option>報價中</option>
+                            <option>派工中</option>
+                            <option>施作中</option>
+                            <option>已結案</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="height: 40px;">查詢</button>
+                </div>
+
+                <!-- 工具列 -->
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--primary-color);">服務專案歷史看板</h3>
+                    <button class="btn btn-primary" onclick="location.href='quotation.html'">+ 建立新服務專案 (報價)</button>
+                </div>
+
+                <!-- 專案看板 (Lifecycle Table) -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>專案編號</th>
+                            <th>服務案場(客戶)</th>
+                            <th>中心燈號 (階段)</th>
+                            <th>生命週期進度</th>
+                            <th>最後更新日期</th>
+                            <th>預估金額</th>
+                            <th>單據操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 案例 1: 報價階段 -->
+                        <tr>
+                            <td>PJ-20260331-001</td>
+                            <td>吹毛球痴 (忠孝店)</td>
+                            <td>
+                                <span class="status-badge stage-1"><span class="status-dot"></span>報價中等回覆</span>
+                            </td>
+                            <td>
+                                <div class="progress-steps">
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot"></div>
+                                    <div class="step-dot"></div>
+                                    <div class="step-dot"></div>
+                                </div>
+                            </td>
+                            <td>2026-03-31</td>
+                            <td>$5,400</td>
+                            <td>
+                                <a href="quotation.html" class="action-link">報價單</a>
+                                <span style="margin: 0 5px; color: #eee;">|</span>
+                                <a href="work-dispatch.html" class="action-link">派工單</a>
+                            </td>
+                        </tr>
+                        <!-- 案例 2: 派工階段 -->
+                        <tr>
+                            <td>PJ-20260328-095</td>
+                            <td>萌寵寵物店 (大安)</td>
+                            <td>
+                                <span class="status-badge stage-2"><span class="status-dot"></span>派工中</span>
+                            </td>
+                            <td>
+                                <div class="progress-steps">
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot"></div>
+                                    <div class="step-dot"></div>
+                                </div>
+                            </td>
+                            <td>2026-03-28</td>
+                            <td>$8,200</td>
+                            <td>
+                                <a href="work-dispatch.html" class="action-link">派工單</a>
+                            </td>
+                        </tr>
+                        <!-- 案例 3: 施作階段 -->
+                        <tr>
+                            <td>PJ-20260325-088</td>
+                            <td>王小明 (美容教室)</td>
+                            <td>
+                                <span class="status-badge stage-3"><span class="status-dot"></span>施作中</span>
+                            </td>
+                            <td>
+                                <div class="progress-steps">
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot"></div>
+                                </div>
+                            </td>
+                            <td>2026-03-25</td>
+                            <td>$12,800</td>
+                            <td>
+                                <a href="work-order.html" class="action-link">施工單</a>
+                                <span style="margin: 0 5px; color: #eee;">|</span>
+                                <a href="completion.html" class="action-link">結案單</a>
+                            </td>
+                        </tr>
+                        <!-- 案例 4: 結案階段 -->
+                        <tr>
+                            <td>PJ-20260320-015</td>
+                            <td>王大衛 (居家消毒)</td>
+                            <td>
+                                <span class="status-badge stage-4"><span class="status-dot"></span>已結案</span>
+                            </td>
+                            <td>
+                                <div class="progress-steps">
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                    <div class="step-dot active"></div>
+                                </div>
+                            </td>
+                            <td>2026-03-20</td>
+                            <td>$3,200</td>
+                            <td>
+                                <a href="completion.html" class="action-link">結案單</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
