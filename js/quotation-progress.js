@@ -40,23 +40,111 @@ function renderState() {
 }
 
 function toggleInputsByStatus(status) {
-    const fileArea = document.getElementById('file-upload-area');
+    const approvalSection = document.getElementById('approval-section');
     const reasonArea = document.getElementById('reason-area');
-    const fileLabel = document.getElementById('file-label');
     const reasonLabel = document.getElementById('reason-label');
 
     if (status === 'approved') {
-        fileArea.style.display = 'block';
+        approvalSection.style.display = 'block';
         reasonArea.style.display = 'block';
-        fileLabel.innerHTML = '報價單回傳 (簽名掃描檔) <span style="color: red;">*必填</span>';
         reasonLabel.innerText = '備註說明 (選填)';
+        
+        // 如果當前在簽章分頁，需重新計算尺寸
+        const signTab = document.getElementById('confirm-sign-tab');
+        if (signTab.style.display === 'block') {
+            setTimeout(resizeCanvas, 0);
+        }
     } else if (status === 'rejected') {
-        fileArea.style.display = 'none';
+        approvalSection.style.display = 'none';
         reasonArea.style.display = 'block';
         reasonLabel.innerHTML = '不成立原因 <span style="color: red;">*必填</span>';
     } else {
-        fileArea.style.display = 'none';
+        approvalSection.style.display = 'none';
         reasonArea.style.display = 'none';
+    }
+}
+
+function switchConfirmTab(tabEl, type) {
+    const parent = tabEl.closest('.el-tabs');
+    parent.querySelectorAll('.el-tabs__item').forEach(item => item.classList.remove('is-active'));
+    tabEl.classList.add('is-active');
+
+    document.getElementById('confirm-file-tab').style.display = type === 'file' ? 'block' : 'none';
+    document.getElementById('confirm-sign-tab').style.display = type === 'sign' ? 'block' : 'none';
+
+    if (type === 'sign') {
+        setTimeout(resizeCanvas, 0);
+    }
+}
+
+// 數位簽章邏輯
+let isDrawing = false;
+let ctx = null;
+let canvas = null;
+
+function initSignaturePad() {
+    canvas = document.getElementById('signatureCanvas');
+    if (!canvas) return;
+    ctx = canvas.getContext('2d');
+    
+    // 初始化繪圖樣式
+    ctx.strokeStyle = "#000000";
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+        const clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - rect.left, y: clientY - rect.top };
+    };
+
+    const start = (e) => {
+        isDrawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        if (e.type === 'touchstart') e.preventDefault();
+    };
+
+    const move = (e) => {
+        if (!isDrawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        if (e.type === 'touchmove') e.preventDefault();
+    };
+
+    const stop = () => isDrawing = false;
+
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', stop);
+    canvas.addEventListener('touchstart', start, { passive: false });
+    canvas.addEventListener('touchmove', move, { passive: false });
+    canvas.addEventListener('touchend', stop);
+}
+
+function resizeCanvas() {
+    if (!canvas || !ctx) return;
+    const rect = canvas.getBoundingClientRect();
+    // 只有在欄位顯示時才進行 resize，避免 clientRect 為 0
+    if (rect.width > 0) {
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 3;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+    }
+}
+
+function clearSignature() {
+    if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 3;
     }
 }
 
@@ -95,4 +183,8 @@ function saveProgress() {
     location.href = 'quotation-list.html';
 }
 
-window.onload = initProgressPage;
+window.onload = () => {
+    initProgressPage();
+    initSignaturePad();
+    window.addEventListener('resize', resizeCanvas);
+};

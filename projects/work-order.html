@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王寵服務管理系統 | 專業施作紀錄</title>
+    <title>王寵服務管理系統 | 專業施作單</title>
     <link rel="stylesheet" href="../css/styles.css">
     <style>
         .photo-grid-execution {
@@ -26,6 +26,7 @@
             cursor: pointer;
         }
         .photo-box i { font-size: 20px; margin-bottom: 5px; }
+        .info-card-readonly { background: #fbfbfc; border-left: 4px solid var(--primary-color); }
     </style>
 </head>
 <body>
@@ -45,55 +46,148 @@
 
     <main class="main-layout">
         <header class="header-bar">
-            <div class="breadcrumb">首頁 / 服務單維護 / 現場施作紀錄</div>
+            <div class="breadcrumb">首頁 / 服務單維護 / 專業施作單</div>
             <div class="user-info">技術員：王大明</div>
         </header>
 
         <div class="content-body" style="padding: 15px;">
-            <div class="container" style="max-width: 800px;">
-                <h3 style="margin-bottom: 5px; color: var(--primary-color);">專業施作紀錄 (S-20260405-001)</h3>
-                <p style="font-size: 13px; color: var(--text-regular); margin-bottom: 20px;">客戶名稱：毛小孩天堂</p>
+            <div class="container" style="max-width: 1200px;">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">專業施作單 (S-20260405-001)</h3>
                 
-                <!-- 項目 1 -->
-                <div class="card" style="padding: 15px; margin-bottom: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <span style="font-weight: bold; font-size: 16px;">[美容區] 冷氣清消 (1台)</span>
-                        <span class="status-tag pending" style="padding: 4px 10px;">施作中</span>
+                <div class="info-grid">
+                    <!-- 客戶與案場基礎資訊 -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header">客戶與案場基礎資訊</div>
+                        <div class="el-row" style="grid-template-columns: repeat(3, 1fr);">
+                            <div class="input-group">
+                                <label>客戶名稱</label>
+                                <input type="text" value="毛小孩天堂" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>聯絡人</label>
+                                <input type="text" value="陳先生" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>聯絡電話</label>
+                                <input type="text" value="0988-888-888" readonly>
+                            </div>
+                            <div class="input-group" style="grid-column: span 3;">
+                                <label>服務地址</label>
+                                <input type="text" id="clientAddress" value="新北市板橋區文化路一段 200 號" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>施作順序 (Priority)</label>
+                                <input type="text" value="美容室 > 會客區" readonly>
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>重點施作備註</label>
+                                <input type="text" value="加強美容室除臭，配合加濕器使用" readonly>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="photo-grid-execution">
-                        <div class="photo-box"><span style="font-size: 20px;">📷</span>施作前</div>
-                        <div class="photo-box"><span style="font-size: 20px;">📷</span>施作中</div>
-                        <div class="photo-box"><span style="font-size: 20px;">📷</span>施作後</div>
-                    </div>
-                    
-                    <div class="input-group" style="margin-top: 15px; margin-bottom: 0;">
-                        <textarea rows="2" placeholder="現場異常備註 (如：濾網損壞...)" style="font-size: 13px;"></textarea>
+
+                    <!-- 業務與時程資訊 -->
+                    <div class="card" style="margin-bottom: 0;">
+                        <div class="card-header">業務與時程資訊</div>
+                        <div class="el-row" style="grid-template-columns: 1fr;">
+                            <div class="input-group">
+                                <label>VIP 服務專員</label>
+                                <input type="text" value="曾致堯" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>VIP 服務專線</label>
+                                <input type="text" value="02-2765-1399" readonly>
+                            </div>
+                            <div class="input-group">
+                                <label>施作日期</label>
+                                <input type="text" value="2026-04-12" readonly>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 項目 2 -->
-                <div class="card" style="padding: 15px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <span style="font-weight: bold; font-size: 16px;">[會客區] 地面抗菌 (5坪)</span>
-                        <div style="display: flex; align-items: center; gap: 5px; color: #67c23a; font-size: 14px;">
-                            <input type="checkbox" checked style="width: 18px; height: 18px;"> 已完成
-                        </div>
+                <div style="margin-top: 30px; margin-bottom: 20px; font-weight: bold; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">
+                    專業施作項目 (依報價與派工單帶入)
+                </div>
+
+                <div class="el-tabs" style="margin-bottom: 15px;">
+                    <div class="el-tabs__header">
+                        <div class="el-tabs__item is-active" onclick="switchExecutionTab(this, 'grooming')">美容區</div>
+                        <div class="el-tabs__item" onclick="switchExecutionTab(this, 'lobby')">會客區</div>
                     </div>
-                    
-                    <div class="photo-grid-execution">
-                        <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?1'); background-size: cover; border: none;"></div>
-                        <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?2'); background-size: cover; border: none;"></div>
-                        <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?3'); background-size: cover; border: none;"></div>
-                    </div>
+                </div>
+
+                <div id="grooming-section" class="execution-section is-active">
+                    <div id="grooming-list" class="execution-item-list"></div>
+                </div>
+
+                <div id="lobby-section" class="execution-section" style="display: none;">
+                    <div id="lobby-list" class="execution-item-list"></div>
                 </div>
             </div>
         </div>
 
         <footer class="footer-nav" style="justify-content: space-between; padding: 15px;">
             <button class="btn" onclick="location.href='projects-list.html'">取消並返回</button>
-            <button class="btn btn-primary" style="flex: 1; margin-left: 15px;" onclick="alert('進度已同步至雲端看板'); location.href='projects-list.html'">同步施作進度</button>
+            <button class="btn btn-primary" style="flex: 1; margin-left: 15px;" onclick="alert('施作進度已同步至雲端看板'); location.href='projects-list.html'">同步施作進度</button>
         </footer>
     </main>
+
+    <!-- 項目範本 (重構為 Row 佈局) -->
+    <template id="execution-item-template">
+        <div class="card execution-item-card" style="padding: 15px; margin-bottom: 15px; border-left: 4px solid #dcdfe6; display: flex; flex-direction: column;">
+            <!-- Row 1: 基本資訊/狀態/人員 -->
+            <div class="execution-row" style="display: flex; gap: 15px; align-items: flex-end; margin-bottom: 15px;">
+                <div style="flex: 1; min-width: 120px;">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 5px;">項目名稱</label>
+                    <span class="item-name" style="font-size: 16px;">冷氣</span>
+                </div>
+                <div style="width: 80px;" class="col-qty">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 5px;">數量</label>
+                    <span class="item-qty" style="font-weight: bold;">1</span>
+                </div>
+                <div style="width: 80px;" class="col-unit">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 5px;">單位</label>
+                    <span class="item-unit" style="font-weight: bold;">台</span>
+                </div>
+                <div style="width: 180px;">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 5px;">施作人員</label>
+                    <select class="worker-select" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <option>王大明 (派工)</option>
+                        <option>李小華</option>
+                        <option>曾致堯</option>
+                    </select>
+                </div>
+                <div style="width: 180px;">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 5px;">施作狀態</label>
+                    <select class="status-select" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color);">
+                        <option value="pending">🟡 待處理</option>
+                        <option value="current">🔵 施作中</option>
+                        <option value="done">🟢 已完成</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Row 2: 照片與備註區 (備註起點對齊上方數量) -->
+            <div style="display: flex; gap: 15px; border-top: 1px solid #f0f2f5; padding-top: 15px;">
+                <div style="flex: 1; min-width: 120px;">
+                    <label style="font-size: 12px; color: #909399; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        施作照片 (點擊縮圖設為封面)
+                        <input type="file" class="real-file-input" style="display: none;" accept="image/*" multiple onchange="handleExecutionFile(this)">
+                        <button class="btn" style="padding: 0; width: 22px; height: 22px; line-height: 20px; font-size: 18px; border-style: dashed; color: var(--primary-color); border-color: var(--primary-color);" onclick="this.previousElementSibling.click()">+</button>
+                    </label>
+                    <div class="execution-photo-area" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 50px;">
+                        <div class="empty-photo-tip" style="color: #c0c4cc; font-size: 12px; display: flex; align-items: center;">尚未上傳照片...</div>
+                    </div>
+                </div>
+                <div style="width: 470px;">
+                    <label style="font-size: 12px; color: #909399; display: block; margin-bottom: 8px;">現場施作備註</label>
+                    <textarea rows="2" placeholder="紀錄現場異常或施作細節..." style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); font-size: 13px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="../js/work-order.js"></script>
 </body>
 </html>

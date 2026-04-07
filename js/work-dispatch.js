@@ -84,12 +84,11 @@ function addStaffRow() {
 }
 
 function initDispatchDate() {
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 14); // 系統日 + 14 天
-    const formattedDate = targetDate.toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
     const dispatchDateInput = document.getElementById('dispatchDate');
     if (dispatchDateInput) {
-        dispatchDateInput.value = formattedDate;
+        dispatchDateInput.value = today;
+        dispatchDateInput.onclick = function() { this.showPicker(); };
     }
 }
 

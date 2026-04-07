@@ -130,6 +130,14 @@ function handleFileSelect(input) {
             removeBtn.innerHTML = '×';
             removeBtn.onclick = (e) => { e.stopPropagation(); box.remove(); };
             box.appendChild(removeBtn);
+
+            // 設定封面點擊事件
+            box.onclick = () => {
+                const currentArea = box.closest('.image-upload-area');
+                currentArea.querySelectorAll('.preview-box').forEach(b => b.classList.remove('is-cover'));
+                box.classList.add('is-cover');
+            };
+
             container.appendChild(box);
         };
         reader.readAsDataURL(file);
@@ -137,10 +145,13 @@ function handleFileSelect(input) {
 }
 
 function initExpiryDate() {
-    const today = new Date().toISOString().split('T')[0];
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 7); // 系統日 + 7 天
+    const formattedDate = targetDate.toISOString().split('T')[0];
     const expiryDateInput = document.getElementById('expiryDate');
     if (expiryDateInput) {
-        expiryDateInput.value = today;
+        expiryDateInput.value = formattedDate;
+        expiryDateInput.onclick = function() { this.showPicker(); };
     }
 }
 

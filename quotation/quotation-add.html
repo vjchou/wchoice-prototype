@@ -39,7 +39,7 @@
                 <div class="info-grid">
                     <div class="card" style="margin-bottom: 0;">
                         <div class="card-header">客戶與案場基礎資訊</div>
-                        <div class="el-row" style="grid-template-columns: 1fr 1fr;">
+                        <div class="el-row" style="grid-template-columns: repeat(3, 1fr);">
                             <div class="input-group">
                                 <label>客戶名稱</label>
                                 <input type="text" id="clientName" placeholder="請輸入客戶名稱">
@@ -52,13 +52,17 @@
                                 <label>聯絡電話</label>
                                 <input type="text" id="contactPhone" placeholder="請輸入聯絡電話">
                             </div>
-                            <div class="input-group">
+                            <div class="input-group" style="grid-column: span 3;">
                                 <label>服務地址</label>
                                 <input type="text" id="clientAddress" placeholder="請輸入施作地址">
                             </div>
-                            <div class="input-group" style="grid-column: span 2;">
+                            <div class="input-group">
                                 <label>施作順序 (Priority)</label>
                                 <input type="text" id="executionPriority" placeholder="例如：美容室 > 會客區">
+                            </div>
+                            <div class="input-group" style="grid-column: span 2;">
+                                <label>重點施作備註</label>
+                                <input type="text" id="executionNotes" placeholder="請輸入現場施作重點備註...">
                             </div>
                         </div>
                     </div>
@@ -68,15 +72,15 @@
                         <div class="el-row" style="grid-template-columns: 1fr;">
                             <div class="input-group">
                                 <label>VIP 服務專員</label>
-                                <input type="text" id="salesName" value="管理員 (Admin)" readonly>
+                                <input type="text" id="salesName" placeholder="請輸入服務專員姓名">
+                            </div>
+                            <div class="input-group">
+                                <label>VIP 服務專線</label>
+                                <input type="text" id="salesPhone" placeholder="請輸入服務專線">
                             </div>
                             <div class="input-group">
                                 <label>報價有效日期</label>
                                 <input type="date" id="expiryDate">
-                            </div>
-                            <div class="input-group">
-                                <label>報價狀態 (預設)</label>
-                                <input type="text" value="報價中" readonly style="background-color: #f5f7fa;">
                             </div>
                         </div>
                     </div>

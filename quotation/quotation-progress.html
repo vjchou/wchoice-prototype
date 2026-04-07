@@ -54,13 +54,33 @@
                         </select>
                     </div>
 
-                    <!-- 報價成立時顯示的檔案上傳區 -->
-                    <div id="file-upload-area" class="input-group" style="display: none;">
-                        <label id="file-label">報價單回傳</label>
-                        <div style="padding: 15px; border: 1px dashed #dcdfe6; border-radius: 4px; text-align: center; background: #fafafa;">
-                            <input type="file" id="file-input" style="display: none;" onchange="handleFileChange(this)">
-                            <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">＋ 選擇簽回檔案 (PDF/JPG)</button>
-                            <div id="file-status" style="margin-top: 10px; font-size: 13px; color: #909399;">尚未選擇檔案</div>
+                    <!-- 客戶同意回條 (Tab 切換) -->
+                    <div id="approval-section" class="input-group" style="display: none; margin-top: 20px;">
+                        <label>客戶同意回條 <span style="color: red;">*必填</span></label>
+                        <div class="el-tabs" style="margin-top: 10px; margin-bottom: 0;">
+                            <div class="el-tabs__header">
+                                <div class="el-tabs__item is-active" onclick="switchConfirmTab(this, 'file')">報價單回傳 (簽名掃描檔)</div>
+                                <div class="el-tabs__item" onclick="switchConfirmTab(this, 'sign')">客戶線上簽章</div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 1: 檔案上傳 -->
+                        <div id="confirm-file-tab" class="tab-content-box" style="display: block; padding: 15px; border: 1px solid #e4e7ed; border-top: none; border-radius: 0 0 4px 4px; background: #fafafa;">
+                            <div style="border: 1px dashed #dcdfe6; padding: 20px; text-align: center; border-radius: 4px;">
+                                <input type="file" id="file-input" style="display: none;" onchange="handleFileChange(this)">
+                                <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">＋ 選擇簽回檔案 (PDF/JPG)</button>
+                                <div id="file-status" style="margin-top: 10px; font-size: 13px; color: #909399;">尚未選擇檔案</div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 2: 線上簽章 -->
+                        <div id="confirm-sign-tab" class="tab-content-box" style="display: none; padding: 15px; border: 1px solid #e4e7ed; border-top: none; border-radius: 0 0 4px 4px;">
+                            <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+                                <button class="btn" style="padding: 2px 10px; font-size: 12px;" onclick="clearSignature()">清除簽名</button>
+                            </div>
+                            <div style="background: #fff; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; touch-action: none;">
+                                <canvas id="signatureCanvas" style="width: 100%; height: 150px; cursor: crosshair;"></canvas>
+                            </div>
                         </div>
                     </div>
 
