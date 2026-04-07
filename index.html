@@ -3,88 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王寵服務管理系統 | 服務專案看板</title>
+    <title>WANG CHOICE | 王寵服務管理系統</title>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .filter-row {
-            display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-end;
-            background: #fff; padding: 20px; border-radius: 4px; border: 1px solid var(--border-color);
-        }
-        .data-table {
-            width: 100%; border-collapse: collapse; background: #fff;
-            border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color);
-        }
-        .data-table th, .data-table td {
-            padding: 15px; text-align: left; border-bottom: 1px solid #f0f0f0; font-size: 14px;
-        }
-        .data-table th { background: #fafafa; color: var(--text-regular); font-weight: 500; }
-        .data-table tr:hover { background: #fdfaf5; }
-        .action-link { color: var(--primary-color); text-decoration: none; font-size: 13px; font-weight: 500; }
-        .action-link.disabled { color: #c0c4cc; cursor: not-allowed; }
-    </style>
 </head>
 <body>
     <aside class="sidebar">
-        <div class="logo">WANG CHOICE</div>
-        <div class="menu-item active">服務專案管理</div>
-        <div class="menu-item">派工調度</div>
-        <div class="menu-item">現場施工紀錄</div>
-        <div class="menu-item">客戶維護</div>
+        <div class="logo" onclick="location.href='index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='projects/projects-list.html'">服務單維護</div>
+        
+        <script>
+            // JS to handle sidebar navigation highlights if needed in root
+        </script>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='settings/item-settings.html'">全域服務項目庫</div>
+        </div>
     </aside>
 
     <main class="main-layout">
         <header class="header-bar">
-            <div class="breadcrumb">首頁 / 服務專案管理 / 專案看板</div>
+            <div class="breadcrumb">首頁 / 客戶導覽控制中心</div>
             <div class="user-info">管理員 (Admin)</div>
         </header>
 
-        <div class="content-body">
-            <div class="container">
-                <!-- 查詢條件 -->
-                <div class="filter-row">
-                    <div class="input-group" style="margin-bottom: 0; flex: 1;">
-                        <label>客戶名稱 / 服務案場</label>
-                        <input type="text" placeholder="關鍵字快速搜尋服務專案...">
+        <div class="content-body" style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); display: flex; align-items: center; justify-content: center;">
+            <div class="container" style="text-align: center; max-width: 800px;">
+                <h1 style="color: var(--primary-color); font-size: 48px; margin-bottom: 10px;">WANG CHOICE</h1>
+                <p style="color: #606266; font-size: 18px; margin-bottom: 40px;">王寵服務管理系統 - Prototype V2</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="card" style="padding: 30px; cursor: pointer; transition: transform 0.3s;" onclick="location.href='quotation/quotation-list.html'">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📝</div>
+                        <h3>報價單維護</h3>
+                        <p style="color: #909399; font-size: 14px; margin-top: 10px;">快速建立服務報價、追蹤回傳進度與成交狀態。</p>
+                        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">前往報價清單</button>
                     </div>
-                    <div class="input-group" style="margin-bottom: 0; width: 150px;">
-                        <label>當前階段</label>
-                        <select>
-                            <option>全部階段</option>
-                            <option>報價中</option>
-                            <option>派工中</option>
-                            <option>施作中</option>
-                            <option>已結案</option>
-                        </select>
+
+                    <div class="card" style="padding: 30px; cursor: pointer; transition: transform 0.3s;" onclick="location.href='projects/projects-list.html'">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🚚</div>
+                        <h3>服務單維護</h3>
+                        <p style="color: #909399; font-size: 14px; margin-top: 10px;">管理已成交專案：派工調度、現場施作紀錄與專業結案。</p>
+                        <button class="btn btn-primary" style="margin-top: 20px; width: 100%;">前往服務清單</button>
                     </div>
-                    <button class="btn btn-primary" style="height: 40px;">查詢</button>
                 </div>
 
-                <!-- 工具列 -->
-                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="color: var(--primary-color);">服務專案歷史看板</h3>
-                    <button class="btn btn-primary" onclick="location.href='quotation.html'">+ 建立新服務專案 (報價)</button>
+                <!-- 設計核心 (Design Core) -->
+                <div class="card" style="margin-top: 30px; padding: 25px; text-align: left;">
+                    <h3 style="color: var(--primary-color); border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                        📌 設計核心 (對專案人員的開發分享)
+                    </h3>
+                    <ul style="list-style: none; padding: 0; color: #606266; font-size: 15px; line-height: 1.8;">
+                        <li>
+                            <strong>第一軌：報價成交 (Quotation Track)</strong>
+                            <br><span style="font-size: 13px; color: #909399;">從業務開發視角切入，重心在於「成案邊界」的確立。我們利用動態工時計算來控管報價準度，並以「報價成立」作為啟動後續流程的嚴謹開關。</span>
+                        </li>
+                        <li>
+                            <strong>第二軌：服務履約 (Project Track)</strong>
+                            <br><span style="font-size: 13px; color: #909399;">這是技術執行端的延伸。在銜接成交資訊後，我們透過 UI 鎖定機制引導人員遵循 `派工 -> 施作 -> 結案` 的標準 SOP，確保現場紀錄與品質的一致性。</span>
+                        </li>
+                        <li>
+                            <strong>第三軌：基礎支撐 (System Settings)</strong>
+                            <br><span style="font-size: 13px; color: #909399;">系統的運作靈魂。透過將「作業區域」與「服務清單」參數化，讓前端邏輯能跨模組重用，實現「一次設定、全端採納」的開發彈性。</span>
+                        </li>
+                        <li style="margin-top: 15px; padding: 10px; background: #fdf6ec; border-radius: 4px; font-style: italic;">
+                            <strong>設計初衷：</strong> 將業務開發與技術執行拆分，是為了讓專業節能各司其職。資料全數位化流轉，不僅是為了去紙本化，更是為了讓整個服務生命週期的進度都能被精確追蹤。
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- 專案看板 (Lifecycle Table) -->
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>專案編號</th>
-                            <th>服務案場(客戶)</th>
-                            <th>中心燈號 (階段)</th>
-                            <th>生命週期進度</th>
-                            <th>最後更新日期</th>
-                            <th>預估金額</th>
-                            <th>單據操作</th>
-                        </tr>
-                    </thead>
-                    <tbody id="project-list-body">
-                        <!-- 資料將由 js/index.js 動態渲染 -->
-                    </tbody>
-                </table>
+                <div style="margin-top: 30px; color: #909399; font-size: 12px;">
+                    © 2026 WANG CHOICE Prototype V2. All rights reserved.
+                </div>
             </div>
         </div>
     </main>
-    <script src="js/index.js"></script>
+
+    <script>
+        // 自動展開子選單邏輯 (如果有的話)
+    </script>
 </body>
 </html>

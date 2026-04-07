@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 系統參數 - 全域服務項目庫</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='../projects/projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent open" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu open">
+            <div class="menu-item sub-item" onclick="location.href='area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item active" onclick="location.href='item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 系統參數 / 全域服務項目庫</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container" style="max-width: 1400px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: var(--primary-color);">全域服務項目庫 (Service Items Library)</h3>
+                    <button class="btn btn-primary" onclick="location.href='item-form.html'">+ 新增服務項目</button>
+                </div>
+
+                <div class="card" style="padding: 0; overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px; text-align: center;">項次</th>
+                                <th style="width: 140px;">項目名稱</th>
+                                <th style="width: 50px; text-align: center;">單位</th>
+                                <th style="width: 110px;">預設基準</th>
+                                <th style="width: 250px;">說明 (施作流程)</th>
+                                <th style="width: 200px;">備註 (條件細項)</th>
+                                <th>作業區域綁定</th>
+                                <th style="width: 100px;">更新日</th>
+                                <th style="width: 50px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="item-table-body">
+                            <!-- JS 動態加載 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="../js/settings.js"></script>
+    <script>
+        function renderItems() {
+            const container = document.getElementById('item-table-body');
+            if (typeof GLOBAL_SERVICE_ITEMS !== 'undefined') {
+                container.innerHTML = GLOBAL_SERVICE_ITEMS.map((item, idx) => `
+                    <tr>
+                        <td style="text-align: center; color: #909399; font-weight: bold;">${idx + 1}</td>
+                        <td style="font-weight: bold;">${item.name}</td>
+                        <td style="text-align: center;">${item.unit}</td>
+                        <td>$${item.price} / ${item.time}m</td>
+                        <td style="font-size: 11px; line-height: 1.5; color: #606266;">${item.desc || '-'}</td>
+                        <td style="font-size: 11px; line-height: 1.5; color: #e6a23c; font-style: italic; white-space: pre-line;">${item.note || '-'}</td>
+                        <td>
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                                ${item.areas.map(area => `<span class="status-tag approved" style="font-size: 10px;">${area}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td style="color: #909399; font-size: 12px;">2026-04-07</td>
+                        <td>
+                            <button class="btn action-btn" onclick="location.href='item-form.html?id=${item.id}'">⚙️ 編輯</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        window.onload = renderItems;
+    </script>
+</body>
+</html>

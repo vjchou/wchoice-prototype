@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 報價單維護</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item active" onclick="location.href='quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='../projects/projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='../settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='../settings/item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 報價單維護 / 查詢清單</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <!-- 查詢條件 -->
+                <div class="filter-row">
+                    <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                        <label>客戶名稱 / 服務地址</label>
+                        <input type="text" placeholder="關鍵字快速搜尋報價單...">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0; width: 150px;">
+                        <label>報價狀態</label>
+                        <select>
+                            <option>全部狀態</option>
+                            <option>報價中</option>
+                            <option>報價成立</option>
+                            <option>報價不成立</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="height: 40px;">查詢</button>
+                </div>
+
+                <!-- 工具列 -->
+                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="color: var(--primary-color);">報價單查詢清單</h3>
+                    <button class="btn btn-primary" onclick="location.href='quotation-add.html'">+ 建立報價單</button>
+                </div>
+
+                <!-- 報價單清單 (GridView) -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>報價編號</th>
+                            <th>客戶名稱</th>
+                            <th>服務地址</th>
+                            <th>金額</th>
+                            <th>報價狀態</th>
+                            <th>建立日期</th>
+                            <th>單據操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="quotation-list-body">
+                        <!-- 資料將由 js/quotation-list.js 動態渲染 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="../js/quotation-list.js"></script>
+</body>
+</html>

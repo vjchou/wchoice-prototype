@@ -4,21 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>王寵服務管理系統 | 專業結案單</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
-        .signature-pad {
-            width: 100%;
-            height: 150px;
-            border: 1px solid var(--border-color);
-            background: #fff;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #c0c4cc;
-            font-style: italic;
-            cursor: crosshair;
-        }
         .summary-row {
             display: flex;
             justify-content: space-between;
@@ -30,16 +17,22 @@
 </head>
 <body>
     <aside class="sidebar">
-        <div class="logo">WANG CHOICE</div>
-        <div class="menu-item active">服務專案管理</div>
-        <div class="menu-item">派工調度</div>
-        <div class="menu-item">現場施工紀錄</div>
-        <div class="menu-item">客戶維護</div>
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item active" onclick="location.href='projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='../settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='../settings/item-settings.html'">全域服務項目庫</div>
+        </div>
     </aside>
 
     <main class="main-layout">
         <header class="header-bar">
-            <div class="breadcrumb">首頁 / 專案結案 / 最終驗收</div>
+            <div class="breadcrumb">首頁 / 服務單維護 / 專業結案單</div>
             <div class="user-info">案場經理：陳大文</div>
         </header>
 
@@ -49,13 +42,14 @@
                 
                 <div class="info-grid">
                     <div class="card">
-                        <div class="card-header">完工成果總結</div>
-                        <div class="summary-row"><span>施作案場</span><span>吹毛球痴 (忠孝店)</span></div>
-                        <div class="summary-row"><span>開工時間</span><span>2026-03-31 09:00</span></div>
-                        <div class="summary-row"><span>完工時間</span><span>2026-03-31 12:45</span></div>
+                        <div class="card-header">完工成果總結 (S-20260405-001)</div>
+                        <div class="summary-row"><span>施作案場</span><span>毛小孩天堂</span></div>
+                        <div class="summary-row"><span>施作地址</span><span>新北市板橋區文化路一段 200 號</span></div>
+                        <div class="summary-row"><span>開工時間</span><span>2026-04-07 10:00</span></div>
+                        <div class="summary-row"><span>完工時間</span><span>2026-04-07 13:45</span></div>
                         <div class="summary-row"><span>服務負責人</span><span>王大明 (Lead)</span></div>
                         <div style="margin-top: 15px; font-weight: bold; color: #f56c6c; text-align: right; font-size: 18px;">
-                            結案金額：$5,400
+                            結案金額：$12,000
                         </div>
                     </div>
 
@@ -63,7 +57,9 @@
                         <div class="card-header" style="text-align: left;">客戶滿意度調查</div>
                         <div style="padding: 20px 0;">
                             <p style="margin-bottom: 15px; color: var(--text-regular); font-size: 14px;">為了提供更好的服務品質，請掃描下方 QR Code 填寫滿意度調查表</p>
-                            <img src="img/qrcode.png" alt="滿意度調查 QR Code" style="width: 200px; height: 200px; border: 1px solid #eee; padding: 10px; border-radius: 8px; background: #fff;">
+                            <div style="width: 150px; height: 150px; margin: 0 auto; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; background: #fff; font-size: 12px; color: #909399;">
+                                QR Code 預留位
+                            </div>
                             <p style="margin-top: 10px; color: var(--primary-color); font-weight: bold;">(連結至 Google 表單)</p>
                         </div>
                     </div>
@@ -86,8 +82,8 @@
 
         <footer class="footer-nav">
             <div style="display: flex; gap: 10px;">
-                <button class="btn" onclick="location.href='index.html'">返回列表</button>
-                <button class="btn btn-primary" onclick="alert('專案結案成功！已生成結案電子檔發送至客戶 Line。'); location.href='index.html'">確認結案並發送電子單</button>
+                <button class="btn" onclick="location.href='projects-list.html'">返回列表</button>
+                <button class="btn btn-primary" onclick="alert('專案結案成功！已生成結案電子檔發送至客戶 Line。'); location.href='projects-list.html'">確認結案並發送電子單</button>
             </div>
         </footer>
     </main>
@@ -105,7 +101,7 @@
                 const rect = canvas.getBoundingClientRect();
                 canvas.width = rect.width;
                 canvas.height = rect.height;
-                ctx.strokeStyle = "#000000"; // 改為黑色
+                ctx.strokeStyle = "#000000";
                 ctx.lineWidth = 3;
                 ctx.lineCap = "round";
                 ctx.lineJoin = "round";
@@ -116,8 +112,8 @@
 
             const getPos = (e) => {
                 const rect = canvas.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+                const clientY = (e.touches && e.touches.length > 0) ? e.touches[0].clientY : e.clientY;
                 return { x: clientX - rect.left, y: clientY - rect.top };
             };
 

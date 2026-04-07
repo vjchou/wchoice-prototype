@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>王寵服務管理系統 | 專業施作單</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>王寵服務管理系統 | 專業施作紀錄</title>
+    <link rel="stylesheet" href="../css/styles.css">
     <style>
         .photo-grid-execution {
             display: grid;
@@ -30,29 +30,35 @@
 </head>
 <body>
     <aside class="sidebar">
-        <div class="logo">WANG CHOICE</div>
-        <div class="menu-item active">服務專案管理</div>
-        <div class="menu-item">派工調度</div>
-        <div class="menu-item">現場施工紀錄</div>
-        <div class="menu-item">客戶維護</div>
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item active" onclick="location.href='projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='../settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='../settings/item-settings.html'">全域服務項目庫</div>
+        </div>
     </aside>
 
     <main class="main-layout">
         <header class="header-bar">
-            <div class="breadcrumb">首頁 / 服務專案管理 / 現場施作</div>
+            <div class="breadcrumb">首頁 / 服務單維護 / 現場施作紀錄</div>
             <div class="user-info">技術員：王大明</div>
         </header>
 
         <div class="content-body" style="padding: 15px;">
             <div class="container" style="max-width: 800px;">
-                <h3 style="margin-bottom: 5px; color: var(--primary-color);">專業施作單 (PJ-20260331-001)</h3>
-                <p style="font-size: 13px; color: var(--text-regular); margin-bottom: 20px;">客服點位：吹毛球痴 (忠孝店)</p>
+                <h3 style="margin-bottom: 5px; color: var(--primary-color);">專業施作紀錄 (S-20260405-001)</h3>
+                <p style="font-size: 13px; color: var(--text-regular); margin-bottom: 20px;">客戶名稱：毛小孩天堂</p>
                 
                 <!-- 項目 1 -->
-                <div class="card" style="padding: 15px;">
+                <div class="card" style="padding: 15px; margin-bottom: 15px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                         <span style="font-weight: bold; font-size: 16px;">[美容區] 冷氣清消 (1台)</span>
-                        <span class="status-badge stage-3">施工中</span>
+                        <span class="status-tag pending" style="padding: 4px 10px;">施作中</span>
                     </div>
                     
                     <div class="photo-grid-execution">
@@ -70,21 +76,23 @@
                 <div class="card" style="padding: 15px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                         <span style="font-weight: bold; font-size: 16px;">[會客區] 地面抗菌 (5坪)</span>
-                        <input type="checkbox" style="width: 20px; height: 20px;"> 
+                        <div style="display: flex; align-items: center; gap: 5px; color: #67c23a; font-size: 14px;">
+                            <input type="checkbox" checked style="width: 18px; height: 18px;"> 已完成
+                        </div>
                     </div>
                     
                     <div class="photo-grid-execution">
                         <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?1'); background-size: cover; border: none;"></div>
-                        <div class="photo-box"><span style="font-size: 20px;">📷</span>施作中</div>
-                        <div class="photo-box"><span style="font-size: 20px;">📷</span>施作後</div>
+                        <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?2'); background-size: cover; border: none;"></div>
+                        <div class="photo-box" style="background-image: url('https://picsum.photos/100/100?3'); background-size: cover; border: none;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <footer class="footer-nav" style="justify-content: space-between; padding: 15px;">
-            <button class="btn" onclick="location.href='index.html'">取消並返回</button>
-            <button class="btn btn-primary" style="flex: 1; margin-left: 15px;" onclick="alert('進度已同步至雲端看板'); location.href='index.html'">同步施作進度</button>
+            <button class="btn" onclick="location.href='projects-list.html'">取消並返回</button>
+            <button class="btn btn-primary" style="flex: 1; margin-left: 15px;" onclick="alert('進度已同步至雲端看板'); location.href='projects-list.html'">同步施作進度</button>
         </footer>
     </main>
 </body>

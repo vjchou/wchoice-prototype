@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 報價進度管理</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item active" onclick="location.href='quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='../projects/projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='../settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='../settings/item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 報價單維護 / 報價進度管理</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container" style="max-width: 600px; margin: 0 auto;">
+                <div class="card">
+                    <div class="card-header">變更報價單狀態</div>
+                    
+                    <div class="info-row" style="padding: 15px; border-bottom: 1px solid #efefef;">
+                        <span style="color: #909399;">報價編號：</span>
+                        <strong id="display-id">-</strong>
+                    </div>
+                    <div class="info-row" style="padding: 15px; border-bottom: 1px solid #efefef;">
+                        <span style="color: #909399;">客戶名稱：</span>
+                        <strong id="display-client">-</strong>
+                    </div>
+                    <div class="info-row" style="padding: 15px; border-bottom: 1px solid #efefef; margin-bottom: 20px;">
+                        <span style="color: #909399;">報價金額：</span>
+                        <strong id="display-price" style="color: var(--primary-color); font-size: 1.2em;">-</strong>
+                    </div>
+
+                    <div class="input-group">
+                        <label>報價狀態變更</label>
+                        <select id="status-select" onchange="toggleInputsByStatus(this.value)">
+                            <option value="pending">🟡 報價中 (追蹤中)</option>
+                            <option value="approved">🟢 報價成立 (成交)</option>
+                            <option value="rejected">🔴 報價不成立 (流失)</option>
+                        </select>
+                    </div>
+
+                    <!-- 報價成立時顯示的檔案上傳區 -->
+                    <div id="file-upload-area" class="input-group" style="display: none;">
+                        <label id="file-label">報價單回傳</label>
+                        <div style="padding: 15px; border: 1px dashed #dcdfe6; border-radius: 4px; text-align: center; background: #fafafa;">
+                            <input type="file" id="file-input" style="display: none;" onchange="handleFileChange(this)">
+                            <button class="btn btn-primary" onclick="document.getElementById('file-input').click()">＋ 選擇簽回檔案 (PDF/JPG)</button>
+                            <div id="file-status" style="margin-top: 10px; font-size: 13px; color: #909399;">尚未選擇檔案</div>
+                        </div>
+                    </div>
+
+                    <!-- 備註或原因說明 -->
+                    <div id="reason-area" class="input-group" style="display: none;">
+                        <label id="reason-label">原因說明</label>
+                        <textarea id="reason-text" rows="4" placeholder="請輸入說明紀錄..." style="width: 100%; border: 1px solid #dcdfe6; border-radius: 4px; padding: 10px; font-size: 14px;"></textarea>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button class="btn" onclick="location.href='quotation-list.html'" style="flex: 1;">返回清單</button>
+                        <button class="btn btn-primary" onclick="saveProgress()" style="flex: 2;">儲存並變更狀態</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="../js/quotation-progress.js"></script>
+</body>
+</html>

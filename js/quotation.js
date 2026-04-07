@@ -11,7 +11,8 @@ const MASTER_DATA = {
         { name: "吹水機", unit: "台", conditions: [{ label: "進氣過濾清理", price: 200, time: 10 }] },
         { name: "玻璃", unit: "面", conditions: [{ label: "標準刮拭", price: 300, time: 10 }] },
         { name: "抗菌鍍膜", unit: "式", conditions: [{ label: "全效防護", price: 2000, time: 60 }] },
-        { name: "擦拭", unit: "式", conditions: [{ label: "雜物架/櫃體", price: 500, time: 30 }] }
+        { name: "擦拭", unit: "式", conditions: [{ label: "雜物架/櫃體", price: 500, time: 30 }] },
+        { name: "天花板", unit: "面", conditions: [{ label: "標準清消", price: 100, time: 10 }] }
     ],
     "會客區": [
         { name: "冷氣", unit: "台", conditions: [{ label: "標準清消", price: 800, time: 10 }] },
@@ -147,3 +148,31 @@ window.onload = () => {
     initTabs();
     initExpiryDate();
 };
+
+function generateInvoice() {
+    const clientName = document.getElementById('clientName').value.trim();
+    const clientAddress = document.getElementById('clientAddress').value.trim();
+    const totalPrice = document.getElementById('inputTotalPrice').value;
+    
+    // 驗證：客戶名稱與地址
+    if (!clientName || !clientAddress) {
+        alert("產製失敗：【客戶名稱】與【服務地址】不可為空！");
+        return;
+    }
+    
+    // 驗證：服務項目勾選
+    const checkedItems = document.querySelectorAll('.item-check:checked');
+    if (checkedItems.length === 0) {
+        alert("產製失敗：服務項目至少須勾選一項！");
+        return;
+    }
+    
+    // 驗證：報價金額
+    if (totalPrice === "0" || parseFloat(totalPrice) === 0) {
+        alert("產製失敗：報價單金額不能為 0！");
+        return;
+    }
+    
+    // 產製成功
+    alert(`產製成功！\n\n客戶名稱：${clientName}\n服務地址：${clientAddress}\n服務金額：$${totalPrice}\n\n已推播報價單。`);
+}

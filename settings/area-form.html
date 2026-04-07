@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 作業區域 - 新增/編輯</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='../projects/projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent open" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu open">
+            <div class="menu-item sub-item active" onclick="location.href='area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb" id="breadcrumb-text">首頁 / 系統參數 / 作業區域管理 / 新增</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container" style="max-width: 640px;">
+                <h3 id="page-title" style="margin-bottom: 20px; color: var(--primary-color);">新增作業區域</h3>
+
+                <div class="card">
+                    <div class="card-header">基本資訊</div>
+                    <div class="input-group">
+                        <label>區域名稱 <span style="color:#f56c6c">*</span></label>
+                        <input type="text" id="areaName" placeholder="例如：沐浴區、手術室...">
+                    </div>
+                    <div class="input-group">
+                        <label>識別代碼 (英文大寫 + 底線) <span style="color:#f56c6c">*</span></label>
+                        <input type="text" id="areaCode" placeholder="例如：BATH_ROOM" style="font-family: monospace; letter-spacing: 1px;">
+                        <small style="color: #909399; font-size: 12px; margin-top: 4px; display: block;">
+                            建議格式：大寫英文字母加底線，作為系統內部唯一識別碼（新增後不可更改）
+                        </small>
+                    </div>
+                    <div class="input-group">
+                        <label>區域狀態</label>
+                        <select id="areaStatus">
+                            <option value="啟用" selected>✅ 啟用 — 此區域可在報價單與派工單中被選用</option>
+                            <option value="停用">🚫 停用 — 此區域暫時不對前端開放</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0;">
+                        <label>備註說明</label>
+                        <textarea id="areaNote" rows="3" placeholder="選填：說明此區域的用途、適用服務項目或特殊注意事項"></textarea>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">關聯服務項目 (預覽)</div>
+                    <p style="color: #909399; font-size: 13px; margin: 0;">
+                        儲存區域後，可至「全域服務項目庫」頁面將服務項目綁定至此區域。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer-nav">
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" onclick="location.href='area-settings.html'">取消並返回</button>
+                <button class="btn btn-primary" onclick="submitArea()">儲存作業區域</button>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // 根據 URL 參數判斷是「新增」或「編輯」
+        const params = new URLSearchParams(location.search);
+        const editId = params.get('id');
+
+        if (editId) {
+            document.getElementById('page-title').textContent = '編輯作業區域';
+            document.getElementById('breadcrumb-text').textContent = '首頁 / 系統參數 / 作業區域管理 / 編輯';
+            document.getElementById('areaCode').setAttribute('readonly', true);
+            document.getElementById('areaCode').style.background = '#f5f7fa';
+            document.getElementById('areaCode').title = '識別代碼於建立後不可修改';
+            // Prototype: 模擬帶入既有資料
+            const mockData = { 1: { name: '美容室', code: 'GROOMING_ROOM', status: '啟用', note: '' }, 2: { name: '會客區', code: 'LOBBY', status: '啟用', note: '' }, 3: { name: '休息區', code: 'BREAKROOM', status: '停用', note: '目前閒置，暫不開放報價' } };
+            const d = mockData[editId];
+            if (d) {
+                document.getElementById('areaName').value = d.name;
+                document.getElementById('areaCode').value = d.code;
+                document.getElementById('areaStatus').value = d.status;
+                document.getElementById('areaNote').value = d.note;
+            }
+        }
+
+        function submitArea() {
+            const name = document.getElementById('areaName').value.trim();
+            const code = document.getElementById('areaCode').value.trim();
+            if (!name || !code) {
+                alert('⚠️ 區域名稱與識別代碼為必填欄位，請填寫後再送出。');
+                return;
+            }
+            const action = editId ? '更新' : '新增';
+            alert(`✅ 作業區域「${name}」已成功${action}！\n（Prototype 僅模擬，資料不實際儲存）`);
+            location.href = 'area-settings.html';
+        }
+    </script>
+</body>
+</html>

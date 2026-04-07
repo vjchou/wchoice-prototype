@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 服務單維護</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item active" onclick="location.href='projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu">
+            <div class="menu-item sub-item" onclick="location.href='../settings/area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='../settings/item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 服務單維護 / 專案清單</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <!-- 查詢條件 -->
+                <div class="filter-row">
+                    <div class="input-group" style="margin-bottom: 0; flex: 1;">
+                        <label>客戶名稱 / 服務地址</label>
+                        <input type="text" placeholder="關鍵字快速搜尋服務單...">
+                    </div>
+                    <div class="input-group" style="margin-bottom: 0; width: 150px;">
+                        <label>服務進度</label>
+                        <select>
+                            <option>全部進度</option>
+                            <option>派工中</option>
+                            <option>施工中</option>
+                            <option>已結案</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="height: 40px;">查詢</button>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <h3 style="color: var(--primary-color);">服務單維護清單 (Projects)</h3>
+                </div>
+
+                <!-- 服務單清單 (GridView) -->
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>服務編號</th>
+                            <th>來源報價</th>
+                            <th>客戶名稱</th>
+                            <th>服務地址</th>
+                            <th>金額</th>
+                            <th>服務進度</th>
+                            <th>逐步流單操作 (由左而右)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="service-list-body">
+                        <!-- 資料將由 js/service-list.js 動態渲染 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script src="../js/service-list.js"></script>
+</body>
+</html>

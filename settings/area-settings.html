@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="wang-choice-theme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王寵服務管理系統 | 系統參數 - 作業區域</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo" onclick="location.href='../index.html'">WANG CHOICE</div>
+        <div class="menu-item" onclick="location.href='../quotation/quotation-list.html'">報價單維護</div>
+        <div class="menu-item" onclick="location.href='../projects/projects-list.html'">服務單維護</div>
+        
+        <div class="menu-item submenu-parent open" onclick="this.classList.toggle('open'); this.nextElementSibling.classList.toggle('open');">
+            系統參數設定 <span class="submenu-arrow">▼</span>
+        </div>
+        <div class="submenu open">
+            <div class="menu-item sub-item active" onclick="location.href='area-settings.html'">作業區域管理</div>
+            <div class="menu-item sub-item" onclick="location.href='item-settings.html'">全域服務項目庫</div>
+        </div>
+    </aside>
+
+    <main class="main-layout">
+        <header class="header-bar">
+            <div class="breadcrumb">首頁 / 系統參數 / 作業區域管理</div>
+            <div class="user-info">管理員 (Admin)</div>
+        </header>
+
+        <div class="content-body">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="color: var(--primary-color);">作業區域管理 (Area Management)</h3>
+                    <button class="btn btn-primary" onclick="location.href='area-form.html'">+ 新增區域</button>
+                </div>
+
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px; text-align: center;">項次</th>
+                                <th>區域名稱</th>
+                                <th>識別代碼</th>
+                                <th>狀態</th>
+                                <th>綁定項目數</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="area-table-body">
+                            <!-- JS 動態加載 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="../js/settings.js"></script>
+    <script>
+        function renderAreas() {
+            const container = document.getElementById('area-table-body');
+            if (typeof GLOBAL_AREAS !== 'undefined') {
+                container.innerHTML = GLOBAL_AREAS.map((area, idx) => {
+                    const statusClass = area.status === '啟用' ? 'approved' : 'rejected';
+                    return `
+                        <tr style="${area.status === '停用' ? 'opacity: 0.55;' : ''}">
+                            <td style="text-align: center; color: #909399; font-weight: bold;">${idx + 1}</td>
+                            <td style="font-weight: bold;">${area.name}</td>
+                            <td><code>${area.code}</code></td>
+                            <td><span class="status-tag ${statusClass}">${area.status}</span></td>
+                            <td>${area.count} 個項目</td>
+                            <td>
+                                <div class="action-btn-group">
+                                    <button class="btn action-btn primary" onclick="location.href='area-form.html?id=${area.id}'">編輯</button>
+                                    <button class="btn action-btn" style="color: ${area.status === '啟用' ? '#f56c6c' : '#67c23a'};">
+                                        ${area.status === '啟用' ? '停用' : '啟用'}
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        window.onload = renderAreas;
+    </script>
+</body>
+</html>
